@@ -1,0 +1,393 @@
+# 🔐 Private & Public Cryptosystems – Complete Exam Notes
+
+> 📌 Covers: AES, IDEA, RC4, LFSR, ElGamal, ECC, FPE, Homomorphic Encryption, Lightweight & Post-Quantum Cryptography
+
+---
+
+# 📘 1. BLOCK CIPHERS
+
+## 🔹 Definition
+
+A block cipher encrypts fixed-size blocks of plaintext using a symmetric key.
+
+---
+
+## 🔷 AES (Advanced Encryption Standard)
+
+### ✔ Features
+
+* Block size: 128 bits
+* Key sizes: 128 / 192 / 256 bits
+* Rounds: 10 / 12 / 14
+
+---
+
+### 🔹 AES Round Steps
+
+```
+1. SubBytes      → Substitute bytes using S-Box
+2. ShiftRows     → Left shift rows
+3. MixColumns    → Column mixing using matrix
+4. AddRoundKey   → XOR with round key
+```
+
+---
+
+### 🔹 S-Box
+
+* Non-linear substitution table
+* Built using:
+
+  * Multiplicative inverse in GF(2^8)
+  * Affine transformation
+
+---
+
+### 🔹 ShiftRows
+
+| Row | Shift  |
+| --- | ------ |
+| 0   | 0      |
+| 1   | 1 left |
+| 2   | 2 left |
+| 3   | 3 left |
+
+---
+
+### 🔹 MixColumns Matrix
+
+```
+|02 03 01 01|
+|01 02 03 01|
+|01 01 02 03|
+|03 01 01 02|
+```
+
+---
+
+### 🔹 AddRoundKey
+
+```
+State = State ⊕ RoundKey
+```
+
+---
+
+### 🔹 Key Expansion
+
+```
+1. RotWord
+2. SubWord
+3. XOR with Rcon
+```
+
+---
+
+---
+
+## 🔷 IDEA (International Data Encryption Algorithm)
+
+### ✔ Features
+
+* Block size: 64 bits
+* Key size: 128 bits
+
+---
+
+### 🔹 Operations Used
+
+```
+1. XOR
+2. Addition mod (2^16)
+3. Multiplication mod (2^16 + 1)
+```
+
+---
+
+### 🔹 Round Structure
+
+* 8 rounds + output transformation
+* Each round uses 6 subkeys
+* Total subkeys = 52
+
+---
+
+### 🔹 Example (Simplified)
+
+```
+Input: X1, X2, X3, X4
+Apply:
+- Multiply
+- Add
+- XOR
+Repeat for rounds
+```
+
+---
+
+# 📘 2. STREAM CIPHERS
+
+## 🔷 RC4
+
+### 🔹 Steps
+
+#### ✔ KSA (Key Scheduling Algorithm)
+
+```
+Initialize S[0..255]
+Shuffle using key
+```
+
+---
+
+#### ✔ PRGA (Pseudo Random Generation)
+
+```
+Generate keystream byte-by-byte
+```
+
+---
+
+### 🔹 Example
+
+```
+Plaintext  : 10101010
+Keystream  : 11001100
+Ciphertext : 01100110
+```
+
+---
+
+## 🔷 LFSR (Linear Feedback Shift Register)
+
+### ✔ Definition
+
+Generates pseudo-random bits using shift registers
+
+---
+
+### 🔹 Working
+
+```
+1. Shift bits right
+2. XOR selected tap bits
+3. Insert new bit at left
+```
+
+---
+
+### 🔹 Example
+
+```
+Seed: 1101
+Taps: (4,1)
+
+Step → New bit = XOR of tap bits
+```
+
+---
+
+# 📘 3. ELGAMAL CRYPTOSYSTEM
+
+## 🔹 Key Generation
+
+```
+Choose p, g
+Private key: x
+Public key: y = g^x mod p
+```
+
+---
+
+## 🔹 Encryption
+
+```
+Choose random k
+
+c1 = g^k mod p
+c2 = m * y^k mod p
+```
+
+---
+
+## 🔹 Decryption
+
+```
+m = c2 * (c1^x)^(-1) mod p
+```
+
+---
+
+# 📘 4. ELLIPTIC CURVE CRYPTOGRAPHY (ECC)
+
+## 🔹 Equation
+
+```
+y^2 = x^3 + ax + b
+```
+
+---
+
+## 🔹 Concepts
+
+### ✔ Elliptic Curve Arithmetic
+
+* Point Addition
+* Point Doubling
+
+---
+
+### ✔ Galois Field
+
+* All operations mod p
+
+---
+
+## 🔹 Finding Points
+
+```
+1. Substitute x
+2. Compute RHS
+3. Check if square mod p
+```
+
+---
+
+## 🔹 Encryption Idea
+
+```
+C1 = kG
+C2 = Pm + kPb
+```
+
+---
+
+---
+
+# 📘 5. FORMAT PRESERVING ENCRYPTION (FPE)
+
+* Output format same as input
+
+### 🔹 Example
+
+```
+1234-5678 → 8391-2245
+```
+
+---
+
+# 📘 6. HOMOMORPHIC ENCRYPTION
+
+## 🔹 Concept
+
+Operations can be performed on encrypted data
+
+---
+
+### 🔹 Property
+
+```
+Enc(a) + Enc(b) = Enc(a + b)
+```
+
+---
+
+# 📘 7. LIGHTWEIGHT CRYPTOGRAPHY
+
+### ✔ Used In
+
+* IoT devices
+* Embedded systems
+
+---
+
+### ✔ Features
+
+```
+Low power
+Small memory
+Fast computation
+```
+
+---
+
+# 📘 8. POST QUANTUM CRYPTOGRAPHY
+
+## 🔹 Quantum Computing
+
+* Can break RSA & ECC
+
+---
+
+## 🔹 Types
+
+### ✔ Lattice-Based
+
+* Based on lattice problems
+
+### ✔ Code-Based
+
+* Based on error-correcting codes
+
+---
+
+# 📊 DIFFERENCE
+
+| Feature | Block Cipher | Stream Cipher |
+| ------- | ------------ | ------------- |
+| Unit    | Blocks       | Bits          |
+| Speed   | Slower       | Faster        |
+| Example | AES          | RC4           |
+
+---
+
+# 📝 IMPORTANT QUESTIONS
+
+## 🔹 2 MARKS
+
+```
+1. Define AES.
+2. What is S-box?
+3. Define RC4.
+4. What is LFSR?
+5. Define ECC.
+```
+
+---
+
+## 🔹 5 MARKS
+
+```
+1. Explain AES steps.
+2. Explain RC4 with example.
+3. Explain ElGamal algorithm.
+4. Explain LFSR working.
+```
+
+---
+
+## 🔹 10 MARKS
+
+```
+1. Explain AES with key expansion.
+2. Explain IDEA algorithm.
+3. Explain ECC with arithmetic.
+4. Explain Post Quantum Cryptography.
+```
+
+---
+
+# ⚡ QUICK REVISION
+
+```
+AES → SubBytes → ShiftRows → MixColumns → AddRoundKey
+IDEA → XOR + ADD + MULT
+RC4 → KSA + PRGA
+ElGamal → (c1 = g^k, c2 = m*y^k)
+ECC → Point addition
+Post Quantum → Lattice + Code-based
+```
+
+---
+
+# ✅ END OF NOTES
